@@ -1,16 +1,18 @@
 #!/bin/bash
+
 PORT=3000
 
-echo "Free port: $PORT..."
-fuser -k $PORT/tcp 2>/dev/null 
-pkill -f rmiregistry
+echo "Killing any process using port $PORT..."
+lsof -ti :$PORT | xargs kill -9 2>/dev/null
+
+sleep 1
 
 export CLASSPATH=$(pwd)/classes
 
 echo "Starting rmiregistry on port $PORT..."
 rmiregistry $PORT &
 
-sleep 2
+sleep 1
 
-echo "Starting HelloServer..."
-java -Djava.rmi.server.hostname=localhost -cp classes src.HelloServer $PORT
+echo "Starting ChatServerMain..."
+java -Djava.rmi.server.hostname=localhost -cp classes src.ChatServerMain $PORT
