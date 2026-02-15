@@ -7,7 +7,10 @@ mkdir -p classes lib
 echo "Compiling all source files..."
 javac -d classes src/*.java
 
-echo "Creating lib/Hello.jar..."
-jar cvf lib/Hello.jar -C classes src/Hello.class
+echo "Creating lib/ChatClient.jar..."
+jar cvf lib/ChatClient.jar -C classes src/ChatClientMain.class
+
+echo "Creating lib/ChatServer.jar..."
+jar cvf lib/ChatServer.jar -C classes src/ChatServerMain.class
 
 echo "Done!"
