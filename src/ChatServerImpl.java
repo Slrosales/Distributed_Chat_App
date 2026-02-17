@@ -43,7 +43,7 @@ public class ChatServerImpl implements ChatServer_itf {
 			}
 
 			if (isAlive){
-				throw new RemoteException("Username already taken.");
+				throw new RemoteException("Username already taken");
 
 			} else {
 				clients.remove(username);
@@ -54,7 +54,7 @@ public class ChatServerImpl implements ChatServer_itf {
 		// Register the client in the server
 
 		Message systemMessage = new Message("Server", username + " has joined the chat.");
-		// history.add(systemMessage);
+		history.add(systemMessage);
 
 		broadcast(systemMessage, null);
 		// Notify all connected clients
@@ -66,6 +66,7 @@ public class ChatServerImpl implements ChatServer_itf {
 		// Remove client from the server list
 
 		Message systemMessage = new Message("Server", username + " has left the chat.");
+		history.add(systemMessage);
 
 		broadcast(systemMessage, null);
 

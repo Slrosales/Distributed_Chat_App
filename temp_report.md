@@ -84,12 +84,12 @@ Starts the RMI Registry and the Server application.
 *   *Note:* The server creates `history.bin` in the working directory.
 
 ### 3. Start Clients
-Open multiple terminals to simulate a distributed environment:
+In terminal mode
 ```bash
 ./run_client.sh Laura
 ./run_client.sh Umar
 ```
-To run on GUI
+To run on GUI mode
 ```bash
 java -cp classes src.ChatGUI Laura
 java -cp classes src.ChatGUI Umar

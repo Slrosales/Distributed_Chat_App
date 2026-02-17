@@ -24,7 +24,7 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
 
         // Window
         setTitle("Group Chat - " + username);
-        setSize(400, 500);
+        setSize(600, 800);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -116,6 +116,8 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
             inputField.setText("");
         } catch (RemoteException e) {
             chatArea.append("[SYSTEM] Connection lost!\n");
+            JOptionPane.showMessageDialog(this, "Server connection lost\nClosign Chat App...");
+            System.exit(0); // Exit the application
         }
     }
 
