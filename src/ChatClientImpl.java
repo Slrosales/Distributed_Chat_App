@@ -19,7 +19,7 @@ public class ChatClientImpl implements ChatClient_itf {
         System.out.println(message.toString());
         // Display message on client terminal
 
-        if (message.getContent().equals("Server is shutting down.")) {
+        if (message.getContent().equals("Server is shutting down")) {
             System.out.println("Disconnecting...");
             System.exit(0);
         }

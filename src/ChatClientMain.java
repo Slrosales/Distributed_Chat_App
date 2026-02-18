@@ -35,7 +35,9 @@ public class ChatClientMain {
             try {
                 server.join(username, clientStub);
 
-                System.out.println("Chat");
+                System.out.println("Chat Here!");
+
+
                 java.util.List<Message> chatHistory = server.getHistory();
                 for (Message m : chatHistory) {
                     System.out.println(m.toString());

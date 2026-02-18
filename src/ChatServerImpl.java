@@ -54,7 +54,7 @@ public class ChatServerImpl implements ChatServer_itf {
 		// Register the client in the server
 
 		Message systemMessage = new Message("Server", username + " has joined the chat.");
-		history.add(systemMessage);
+		// history.add(systemMessage);
 
 		broadcast(systemMessage, null);
 		// Notify all connected clients
@@ -66,7 +66,6 @@ public class ChatServerImpl implements ChatServer_itf {
 		// Remove client from the server list
 
 		Message systemMessage = new Message("Server", username + " has left the chat.");
-		history.add(systemMessage);
 
 		broadcast(systemMessage, null);
 
@@ -81,7 +80,7 @@ public class ChatServerImpl implements ChatServer_itf {
 		Message message = new Message(username, text);
 		history.add(message);
 		saveHistory();
-		broadcast(message, message.getSender());
+		broadcast(message, null);
 		// Broadcast user's message
 	}
 
@@ -96,10 +95,10 @@ public class ChatServerImpl implements ChatServer_itf {
 			String username = entry.getKey(); // Get username
 			ChatClient_itf client = entry.getValue(); // Get client reference
 
-			// Skip sender
-			// if (excludeUsername != null && username.equals(excludeUsername)) {
-			// continue;
-			// }
+			 //Skip sender
+			 if (excludeUsername != null && username.equals(excludeUsername)) {
+			 	continue;
+			}
 
 			try {
 				client.receiveMessage(message);
