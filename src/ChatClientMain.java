@@ -1,7 +1,7 @@
 package src;
 
-import java.rmi.*; 
-import java.rmi.server.*; 
+import java.rmi.*;
+import java.rmi.server.*;
 import java.rmi.registry.*;
 import java.util.Scanner;
 
@@ -10,10 +10,13 @@ public class ChatClientMain {
     public static void main(String[] args) {
 
         try {
-			if (args.length < 1) {
-				System.out.println("Usage: java ChatClientMain <username>");
-				return;
-			}	
+            if (args.length < 1) {
+                System.out.println("Remember to introduce a username as a command-line argument");
+                System.out.println(
+                        "Example: java -cp classes src.ChatClientMain <username>\nor\n./run_client.sh <username>");
+
+                return;
+            }
             String username = args[0];
             // Username passed as command-line argument
 
@@ -31,20 +34,28 @@ public class ChatClientMain {
 
             try {
                 server.join(username, clientStub);
+
+                System.out.println("Chat Here!");
+
+
+                java.util.List<Message> chatHistory = server.getHistory();
+                for (Message m : chatHistory) {
+                    System.out.println(m.toString());
+                }
             } catch (RemoteException e) {
                 System.out.println("ERROR: " + e.getMessage());
-                System.exit(1);  // Stop client
+                System.exit(1); // Stop client
             }
 
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
-               try{ //try/catch is just to check if server has disconnected
+                try { // try/catch is just to check if server has disconnected
                     String text = scanner.nextLine();
                     // Read input from user
 
                     if (text.trim().isEmpty()) {
-                        continue;  // Ignore empty input
+                        continue; // Ignore empty input
                     }
 
                     if (text.equalsIgnoreCase("/leave")) {
@@ -52,7 +63,7 @@ public class ChatClientMain {
                         // Notify server that client leaves
                         break;
                     }
-				    //Message message = new Message(username, text);
+                    // Message message = new Message(username, text);
                     server.sendMessage(username, text);
                     // Send message to server
                 }

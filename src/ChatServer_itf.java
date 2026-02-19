@@ -2,6 +2,7 @@ package src;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface ChatServer_itf extends Remote {
 
@@ -13,4 +14,8 @@ public interface ChatServer_itf extends Remote {
 
     void sendMessage(String username, String text) throws RemoteException;
     // Client sends a message to be broadcast to all participants
+
+    List<Message> getHistory() throws RemoteException;
+    // Client requests the chat history from the server
+
 }
