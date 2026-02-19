@@ -36,7 +36,7 @@ public class ChatServerImpl implements ChatServer_itf {
 			boolean isAlive = true;
 			try {
 				ChatClient_itf oldClient = clients.get(username);
-				oldClient.receiveMessage(new Message("Server", "Checking if username is taken..."));
+				oldClient.receiveMessage(new Message("[SERVER]", "Checking if username is taken..."));
 
 			} catch (RemoteException e) {
 				isAlive = false;
@@ -53,11 +53,13 @@ public class ChatServerImpl implements ChatServer_itf {
 		clients.put(username, client);
 		// Register the client in the server
 
-		Message systemMessage = new Message("Server", username + " has joined the chat.");
-		// history.add(systemMessage);
+		Message systemMessage = new Message("[SERVER]", username + " has joined the chat");
 
 		broadcast(systemMessage, null);
 		// Notify all connected clients
+
+		history.add(systemMessage);
+		saveHistory();
 	}
 
 	public synchronized void leave(String username) throws RemoteException {
@@ -65,7 +67,9 @@ public class ChatServerImpl implements ChatServer_itf {
 		clients.remove(username);
 		// Remove client from the server list
 
-		Message systemMessage = new Message("Server", username + " has left the chat.");
+		Message systemMessage = new Message("[SERVER]", username + " has left the chat");
+		history.add(systemMessage);
+		saveHistory();
 
 		broadcast(systemMessage, null);
 
@@ -106,7 +110,7 @@ public class ChatServerImpl implements ChatServer_itf {
 
 			} catch (RemoteException e) {
 				if (!shuttingDown) { // if server shutdown with ctrl+c, condition is false
-					System.out.println("Client " + username + " disconnected unexpectedly.");
+					System.out.println("Client " + username + " disconnected unexpectedly");
 				}
 
 				clients.remove(username);

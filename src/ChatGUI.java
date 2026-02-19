@@ -1,6 +1,8 @@
 package src;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.rmi.registry.LocateRegistry;
@@ -24,7 +26,9 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
 
         // Window
         setTitle("Group Chat - " + username);
-        setSize(600, 800);
+        setSize(450, 600);
+
+        setLocationRelativeTo(null);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -42,10 +46,14 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         chatArea.setLineWrap(true);
+        chatArea.setWrapStyleWord(true);
+        chatArea.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        chatArea.setMargin(new Insets(10, 10, 10, 10));
         add(new JScrollPane(chatArea), BorderLayout.CENTER);
 
         // Input Panel
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        JPanel bottomPanel = new JPanel(new BorderLayout(5, 5));
+        bottomPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         inputField = new JTextField();
         sendButton = new JButton("Send");
         bottomPanel.add(inputField, BorderLayout.CENTER);
@@ -60,6 +68,8 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
         connectToServer(host, port);
 
         setVisible(true);
+
+        inputField.requestFocusInWindow();
     }
 
     private void quitChat() {
@@ -85,17 +95,17 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
             Registry registry = LocateRegistry.getRegistry(host, port);
             server = (ChatServer_itf) registry.lookup("ChatService");
 
-            // Join the chat
-            server.join(username, clientStub);
-
             // Get History
             java.util.List<Message> history = server.getHistory();
             for (Message m : history) {
                 chatArea.append(m.toString() + "\n");
             }
 
+            // Join the chat
+            server.join(username, clientStub);
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error connecting: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error connecting");
             System.exit(1);
         }
     }
@@ -115,8 +125,8 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
             server.sendMessage(username, text);
             inputField.setText("");
         } catch (RemoteException e) {
-            chatArea.append("[SYSTEM] Connection lost!\n");
-            JOptionPane.showMessageDialog(this, "Server connection lost\nClosign Chat App...");
+            JOptionPane.showMessageDialog(this, "Connection lost. Closing...", 
+                "Network Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0); // Exit the application
         }
     }
