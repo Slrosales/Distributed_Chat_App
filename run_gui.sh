@@ -3,7 +3,8 @@ unset LD_LIBRARY_PATH
 
 if [ -z "$1" ]; then
     echo "Remember to introduce a username as a command-line argument"
-    echo "Example: java -cp classes src.ChatGUI <username>\nor\n./run_gui.sh <username>"
+    echo "Example: java -cp classes src.ChatGUI <username>"
+    echo "or ./run_gui.sh <username>"
     exit 1
 fi
 

@@ -80,7 +80,7 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
                 server.leave(username); // Notify server we're leaving
             } catch (RemoteException e) {
                 // If we can't contact the server, just exit anyway
-                System.out.println("Server already down.");
+                System.out.println("Server already down");
 
             }
             System.exit(0); // Exit the application
@@ -167,7 +167,7 @@ public class ChatGUI extends JFrame implements ChatClient_itf {
         try {
             port = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid port. Using default 3000.");
+            System.out.println("Invalid port. Using default 3000");
         }
     }
 

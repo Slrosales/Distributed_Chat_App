@@ -57,7 +57,7 @@ public class ChatServerMain {
             server.setShuttingDown(true);
             server.saveHistory(); // Save chat history to disk
             // Notify clients
-            server.broadcast(new Message("SYSTEM", "Server is shutting down"), null);
+            server.broadcast(new Message("SEVER", "Server is shutting down"), null);
 
             Registry registry = LocateRegistry.getRegistry(3000);
             registry.unbind("ChatService");
