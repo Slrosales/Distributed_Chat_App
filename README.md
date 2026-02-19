@@ -1,42 +1,49 @@
-## How to run the code
+# Distributed Chat Application (Java RMI)
+**Authors:** UMER Muhammad and GOMEZ ROSALES Laura Sofía
+## Setup and Installation
 
-### Prerequisites
-*   A Linux environment (or similar Unix-based OS).
-*   Java Development Kit (JDK) installed.
-*   Port **3000** must be free.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Slrosales/p_chat.git
+cd p_chat
+```
 
+### 2. Prerequisites
+*   Linux environment (Ubuntu recommended)
+*   Java Development Kit (JDK 17+)
+*   Port **3000** must be available
+*   *Note: If you switch Java versions, delete `history.bin` to avoid `InvalidClassException`*
+
+## Execution
 
 ### 1. Compilation
-Use the provided build script to clean and compile all sources:
+Use the provided build script to clean and compile the project:
 ```bash
+chmod +x build.sh
 ./build.sh
 ```
 
 ### 2. Start the Server
-Starts the RMI Registry and the Server application.
+Run the server script to initialize the RMI Registry and the Chat Service:
 ```bash
 ./run_server.sh
 ```
-*   *Note:* The server creates `history.bin` in the working directory.
 
-### 3. Start Clients
-Open multiple terminals mode:
-```bash
-./run_client.sh Laura
-./run_client.sh Umar
-```
-To run on GUI mode:
-```bash
-./run_gui.sh Laura
-./run_gui.sh Umar
-```
-or, if you want to specify the port:
-```bash
-./run_gui.sh Laura 3000
-./run_gui.sh Umar 3000
-```
-This will connect to the server running on `localhost` at port `3000`. Make sure the server is running in the same port before starting the clients.
+### 3. Start the Clients
+You can run the client in two different modes:
 
-### 4. Commands
+**Terminal Mode:**
+```bash
+./run_client.sh <username>
+```
+
+**Graphical Mode (GUI):**
+```bash
+./run_gui.sh <username> [port]
+# Or manually:
+java -cp classes src.ChatGUI <username> localhost 3000
+```
+
+## Commands
 *   **Client:** Type any text to send. Type `/leave` to exit gracefully.
 *   **Server:** Type `/exit` or press `Ctrl+C` to stop (both trigger the persistence save).
